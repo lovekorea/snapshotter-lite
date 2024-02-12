@@ -259,7 +259,7 @@ class GenericAsyncWorker:
         resp = await self._client.post(
                 url=urljoin(settings.relayer.host, settings.relayer.endpoint),
                 json={
-                    'slotId': settings.slot_id,
+                    'slotId': 0,
                     'request': request_,
                     'signature': '0x' + str(signature.hex()),
                     'projectId': project_id,
@@ -316,7 +316,7 @@ class GenericAsyncWorker:
 
         deadline = 0
         request = Request(
-            slotId=settings.slot_id,
+            slotId=0,
             deadline=deadline,
             snapshotCid=snapshot_cid,
             epochId=epoch_id,
@@ -330,7 +330,7 @@ class GenericAsyncWorker:
         s = big_endian_to_int(signature[32:64])
 
         final_sig = r.to_bytes(32, 'big') + s.to_bytes(32, 'big') + v.to_bytes(1, 'big')
-        request_ = {'slotId': settings.slot_id, 'deadline': deadline, 'snapshotCid': snapshot_cid, 'epochId': epoch_id, 'projectId': project_id}
+        request_ = {'slotId': 0, 'deadline': deadline, 'snapshotCid': snapshot_cid, 'epochId': epoch_id, 'projectId': project_id}
         return request_, final_sig
 
     async def _init_httpx_client(self):
