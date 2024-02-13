@@ -310,7 +310,10 @@ class GenericAsyncWorker:
             name='PowerloomProtocolContract', version='0.1', chainId=1,
             verifyingContract="0x" + "0" * 40,
         )
-        self._signer_private_key = PrivateKey.from_hex(settings.signer_private_key)
+        self._private_key = settings.signer_private_key
+        if self._private_key.startswith('0x'):
+            self._private_key = self._private_key[2:]
+        self._signer_private_key = PrivateKey.from_hex(self._private_key)
 
     def generate_signature(self, snapshot_cid, epoch_id, project_id):
 
