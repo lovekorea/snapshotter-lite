@@ -27,6 +27,12 @@ if [ ! -f .env ]; then
         sed -i'.backup' "s#<signer-account-private-key>#$SIGNER_ACCOUNT_PRIVATE_KEY#" .env
     fi
 
+    if [ -z "$SLOT_ID" ]; then
+        echo "Enter $SLOT_ID: ";
+        read SLOT_ID;
+        sed -i'.backup' "s#<signer-account-SLOT_ID>#$SLOT_ID#" .env
+    fi
+
 fi
 
 source .env
@@ -45,6 +51,11 @@ fi
 
 if [ -z "$SIGNER_ACCOUNT_PRIVATE_KEY" ]; then
     echo "SIGNER_ACCOUNT_ADDRESS not found, please set this in your .env!";
+    exit 1;
+fi
+
+if [ -z "$SLOT_ID" ]; then
+    echo "SLOT_ID not found, please set this in your .env!";
     exit 1;
 fi
 
